@@ -24,3 +24,25 @@ export const signUpUser = async (signUpData) => {
 		console.log(`error here`, errors);
 	}
 };
+
+export const signInUser = async (signInData) => {
+	const { email, password } = signInData;
+	try {
+		const userData = await axios.post('/api/signin', {
+			email,
+			password,
+		});
+
+		console.log(`userData`, userData);
+
+		return { data: userData.data, status: userData.status };
+	} catch (err) {
+		const {
+			response: {
+				data: { error },
+			},
+		} = err;
+		console.log(`error here`, err);
+		return 'Incorrect username or password';
+	}
+};

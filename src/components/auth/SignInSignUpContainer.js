@@ -6,10 +6,17 @@ import SignUp from './SignUp';
 function SignInSignUpContainer() {
 	const [toggleLeftOverlay, settoggleLeftOverlay] = useState(true);
 	const [signInSuccessFull, setSignInSuccessFull] = useState(false);
+	const [signUpSuccessFull, setSignUpSuccessFull] = useState(false);
 
 	const changeContextOfAuth = (isSignUpSuccess) => {
 		if (isSignUpSuccess) {
 			settoggleLeftOverlay(true);
+			setSignUpSuccessFull(true);
+		}
+	};
+
+	const redirectOnSignIn = (isSignInSuccess) => {
+		if (isSignInSuccess) {
 			setSignInSuccessFull(true);
 		}
 	};
@@ -30,15 +37,15 @@ function SignInSignUpContainer() {
 							toggleLeftOverlay ? 'signUp-active' : 'no-signUp'
 						}`}
 					>
-						{signInSuccessFull && (
+						{signUpSuccessFull && (
 							<div
 								className="alert alert-success h-3 d-inline-block p-1 mt-2"
 								role="alert"
 							>
-								Sign in successfull! Please sign in to continue
+								Sign up successfull! Please sign in to continue
 							</div>
 						)}
-						<SignIn />
+						<SignIn callback={redirectOnSignIn} />
 					</div>
 					<div className="overlay-container">
 						<div className="overlay">
