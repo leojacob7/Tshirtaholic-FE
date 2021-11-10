@@ -58,7 +58,8 @@ function SignUp({ callback }) {
 		);
 	};
 
-	const onSubmit = async () => {
+	const onSubmit = async (e) => {
+		e.preventDefault();
 		console.log('hee', { nameError, emailError, passwordError });
 		if (
 			nameError.length === 0 &&
@@ -67,6 +68,7 @@ function SignUp({ callback }) {
 		) {
 			console.log('SignUp Data success');
 			const data = await signUpUser(signUpData);
+			console.log(`data after signUp`, data);
 			if (!data.error) {
 				setsignUpData({
 					name: '',
@@ -79,6 +81,7 @@ function SignUp({ callback }) {
 				callback(true);
 				console.log('SignUp successful');
 			} else {
+				console.log('signup error');
 				setsignUperror(data.error);
 			}
 		} else {
@@ -90,47 +93,50 @@ function SignUp({ callback }) {
 	return (
 		<div className="component-signUpContainer">
 			<h1>Create Acount</h1>
-			<form action="">
-				<input
-					className={isNameError() ? 'errorForm' : ''}
-					type="text"
-					value={signUpData.name}
-					placeholder="name"
-					onChange={(e) => {
-						setsignUpData({ ...signUpData, name: e.target.value });
-					}}
-				/>
-				<input
-					className={isEmailError() ? 'errorForm' : ''}
-					type="text"
-					value={signUpData.email}
-					placeholder="email"
-					onChange={(e) => {
-						setsignUpData({ ...signUpData, email: e.target.value });
-					}}
-				/>
-				<input
-					className={isPasswordError() ? 'errorForm' : ''}
-					type="password"
-					value={signUpData.password}
-					placeholder="password"
-					onChange={(e) => {
-						setsignUpData({
-							...signUpData,
-							password: e.target.value,
-						});
-					}}
-				/>
-				<button
-					className={`submit ${
-						!canSubmit() ? 'submit-disabled' : ''
-					}`}
-					onClick={onSubmit}
-				>
-					Sign Up
-				</button>
-				{/* <div>{signUpData}</div> */}
-			</form>
+			{/* <form
+				className="d-flex justify-content-center flex-column align-items-center w-100"
+				action=""
+			> */}
+			<input
+				className={isNameError() ? 'errorForm' : ''}
+				type="text"
+				value={signUpData.name}
+				placeholder="name"
+				onChange={(e) => {
+					e.preventDefault();
+					setsignUpData({ ...signUpData, name: e.target.value });
+				}}
+			/>
+			<input
+				className={isEmailError() ? 'errorForm' : ''}
+				type="text"
+				value={signUpData.email}
+				placeholder="email"
+				onChange={(e) => {
+					e.preventDefault();
+					setsignUpData({ ...signUpData, email: e.target.value });
+				}}
+			/>
+			<input
+				className={isPasswordError() ? 'errorForm' : ''}
+				type="password"
+				value={signUpData.password}
+				placeholder="password"
+				onChange={(e) => {
+					setsignUpData({
+						...signUpData,
+						password: e.target.value,
+					});
+				}}
+			/>
+			<button
+				className={`submit ${!canSubmit() ? 'submit-disabled' : ''}`}
+				onClick={onSubmit}
+			>
+				Sign Up
+			</button>
+			{/* <div>{signUpData}</div> */}
+			{/* </form> */}
 			<div className="d-flex flex-column w-30 h-10 justify-content-center align-items-center">
 				{nameError.length > 0 && nameError !== 'emptyState' && (
 					<div
@@ -158,7 +164,7 @@ function SignUp({ callback }) {
 				)}
 				{signUperror.length > 0 && (
 					<div
-						className="alert alert-danger h-3 d-inline-block p-1"
+						className="alert alert-info h-3 d-inline-block p-1"
 						role="alert"
 					>
 						{signUperror}

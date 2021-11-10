@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { signInUser } from './auth.helper';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../store/GlobalState';
 
 function SignIn({ callback }) {
 	const [signInData, setsignInData] = useState({ email: '', password: '' });
 	const [emailError, setEmailError] = useState('emptyState');
 	const [passwordError, setPasswordError] = useState('emptyState');
 	const [signInerror, setsignInerror] = useState('');
+	const [authState, setAuthState] = useContext(AuthContext);
 
 	let navigate = useNavigate();
 
@@ -29,29 +31,25 @@ function SignIn({ callback }) {
 		}
 	}, [signInData]);
 
-	const isPasswordError = () => {
-		return passwordError.length > 0 && passwordError !== 'emptyState';
-	};
-
-	const isEmailError = () => {
-		return emailError.length > 0 && emailError !== 'emptyState';
-	};
-
 	const onSubmit = async () => {
-		console.log('hee', { emailError, passwordError });
 		if (emailError.length === 0 && passwordError.length === 0) {
-			console.log('SignIn success');
+			console.log('SignIn without any error');
 			const data = await signInUser(signInData);
 			if (!data || data.status === 200) {
 				setsignInData({
 					password: '',
 					email: '',
 				});
+				const {
+					data: {
+						body: { user },
+					},
+				} = data;
 				setEmailError('emptyState');
 				setPasswordError('emptyState');
+				setAuthState(user);
 				callback(true);
-				navigate('/qwqw');
-				console.log('SignUp successful');
+				navigate('/');
 			} else {
 				setsignInerror(data);
 			}
@@ -83,7 +81,6 @@ function SignIn({ callback }) {
 	);
 
 	const renderSignInErrorBanner = () => {
-		console.log('here');
 		return (
 			signInerror.length > 0 && (
 				<div
@@ -96,9 +93,8 @@ function SignIn({ callback }) {
 		);
 	};
 
-	console.log('testing', signInData);
 	return (
-		<div className="component-signInContainer">
+		<div className="component-signInContainer d-flex flex-column flex-align-items-center flex-justify-content-center">
 			<h1>Sign In</h1>
 			<input
 				type="email"

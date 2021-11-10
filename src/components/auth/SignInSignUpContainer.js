@@ -5,7 +5,6 @@ import SignUp from './SignUp';
 
 function SignInSignUpContainer() {
 	const [toggleLeftOverlay, settoggleLeftOverlay] = useState(true);
-	const [signInSuccessFull, setSignInSuccessFull] = useState(false);
 	const [signUpSuccessFull, setSignUpSuccessFull] = useState(false);
 
 	const changeContextOfAuth = (isSignUpSuccess) => {
@@ -16,8 +15,9 @@ function SignInSignUpContainer() {
 	};
 
 	const redirectOnSignIn = (isSignInSuccess) => {
+		// FIXME: come back to see if we need to redirect after sign in
 		if (isSignInSuccess) {
-			setSignInSuccessFull(true);
+			// setSignInSuccessFull(true);
 		}
 	};
 

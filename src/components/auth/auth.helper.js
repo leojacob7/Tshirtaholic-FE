@@ -28,21 +28,67 @@ export const signUpUser = async (signUpData) => {
 export const signInUser = async (signInData) => {
 	const { email, password } = signInData;
 	try {
+		if (!email || !password) {
+			throw new Error({
+				error: 'Empty email or password',
+			});
+		}
 		const userData = await axios.post('/api/signin', {
 			email,
 			password,
 		});
 
-		console.log(`userData`, userData);
+		// TODO: this is getData api move it to the required component
+		// const getUserData = await axios.get(
+		// 	`/api/user/${userData.data.body.user.id}`,
+		// 	{
+		// 		headers: {
+		// 			Accept: 'application/json',
+		// 			'Content-Type': 'application/json',
+		// 			// Authorization: 'Bearer ' + userData.data.body.token, //the token is a variable which holds the token
+		// 		},
+		// 	}
+		// );
+
+		// TODO: this is a test get token file need to remove it
+		// const newData = await axios.get(`/api/getToken`, {
+		// 	headers: {
+		// 		Accept: 'application/json',
+		// 		'Content-Type': 'application/json',
+		// 		// Authorization: 'Bearer ' + userData.data.body.token, //the token is a variable which holds the token
+		// 	},
+		// });
 
 		return { data: userData.data, status: userData.status };
 	} catch (err) {
-		const {
-			response: {
-				data: { error },
-			},
-		} = err;
-		console.log(`error here`, err);
+		console.log(`error here`, err.response);
 		return 'Incorrect username or password';
 	}
+};
+
+export const signOut = async () => {
+	try {
+		const { message } = await axios.post('/api/signOut');
+		if (message !== 'User signOut') {
+			throw new Error('Signout unsuccessfull');
+		}
+		return true;
+	} catch (error) {
+		console.log(`error`, error);
+		return false;
+	}
+};
+
+export const getUserData = async () => {
+	// TODO: this is getData api move it to the required component
+	// const getUserData = await axios.get(
+	// 	`/api/user/${userData.data.body.user.id}`,
+	// 	{
+	// 		headers: {
+	// 			Accept: 'application/json',
+	// 			'Content-Type': 'application/json',
+	// 			// Authorization: 'Bearer ' + userData.data.body.token, //the token is a variable which holds the token
+	// 		},
+	// 	}
+	// );
 };
