@@ -79,16 +79,22 @@ export const signOut = async () => {
 	}
 };
 
-export const getUserData = async () => {
-	// TODO: this is getData api move it to the required component
-	// const getUserData = await axios.get(
-	// 	`/api/user/${userData.data.body.user.id}`,
-	// 	{
-	// 		headers: {
-	// 			Accept: 'application/json',
-	// 			'Content-Type': 'application/json',
-	// 			// Authorization: 'Bearer ' + userData.data.body.token, //the token is a variable which holds the token
-	// 		},
-	// 	}
-	// );
+export const isLoggedIn = async () => {
+	try {
+		const { data, status } = await axios.get(`/api/getToken`, {
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+		});
+		console.log('sign out successful');
+		if (status === 200) {
+			console.log('sign out successful inside check status');
+			return { userData: data.user, userSignedIn: true };
+		}
+		throw new Error({ message: 'Unable to fetch data' });
+	} catch (error) {
+		console.log(`error`, error);
+		return { userSignedIn: false };
+	}
 };

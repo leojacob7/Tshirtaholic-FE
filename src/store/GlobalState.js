@@ -2,7 +2,7 @@ import React, { useState, createContext } from 'react';
 
 export const AuthContext = createContext();
 
-export const defaulState = {
+export const defaultState = {
 	_id: '',
 	name: '',
 	email: '',
@@ -11,7 +11,7 @@ export const defaulState = {
 };
 
 export const AuthProvider = (props) => {
-	const [authState, setAuthState] = useState(defaulState);
+	const [authState, setAuthState] = useState(defaultState);
 
 	return (
 		<AuthContext.Provider value={[authState, setAuthState]}>

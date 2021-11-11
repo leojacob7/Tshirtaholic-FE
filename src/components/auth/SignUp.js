@@ -60,15 +60,13 @@ function SignUp({ callback }) {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-		console.log('hee', { nameError, emailError, passwordError });
 		if (
 			nameError.length === 0 &&
 			emailError.length === 0 &&
 			passwordError.length === 0
 		) {
-			console.log('SignUp Data success');
+			//'SignUp Data success'
 			const data = await signUpUser(signUpData);
-			console.log(`data after signUp`, data);
 			if (!data.error) {
 				setsignUpData({
 					name: '',
