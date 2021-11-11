@@ -14,7 +14,7 @@ function SignedInPageRelative() {
 			const data = await isLoggedIn();
 			if (data.userSignedIn) {
 				setAuthState(data.userData);
-				navigate('/home');
+				return navigate('/home');
 			}
 			if (!data.userSignedIn || authState._id === '') {
 				navigate('/signIn');

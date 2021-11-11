@@ -1,7 +1,12 @@
 import React from 'react';
+import Base from './Base';
 
 function PageNotFound() {
-	return <div>OOPS!!! page not found</div>;
+	return (
+		<Base>
+			<div className="jumbotron-fluid">OOPS!!! page not found</div>
+		</Base>
+	);
 }
 
 export default PageNotFound;
