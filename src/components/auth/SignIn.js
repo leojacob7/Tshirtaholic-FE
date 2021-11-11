@@ -8,7 +8,7 @@ function SignIn({ callback }) {
 	const [emailError, setEmailError] = useState('emptyState');
 	const [passwordError, setPasswordError] = useState('emptyState');
 	const [signInerror, setsignInerror] = useState('');
-	const [authState, setAuthState] = useContext(AuthContext);
+	const [, setAuthState] = useContext(AuthContext);
 
 	let navigate = useNavigate();
 
@@ -33,7 +33,7 @@ function SignIn({ callback }) {
 
 	const onSubmit = async () => {
 		if (emailError.length === 0 && passwordError.length === 0) {
-			console.log('SignIn without any error');
+			//'SignIn without any error'
 			const data = await signInUser(signInData);
 			if (!data || data.status === 200) {
 				setsignInData({
@@ -47,9 +47,9 @@ function SignIn({ callback }) {
 				} = data;
 				setEmailError('emptyState');
 				setPasswordError('emptyState');
-				setAuthState(user);
+				setAuthState({ ...user });
 				callback(true);
-				navigate('/');
+				navigate('/home');
 			} else {
 				setsignInerror(data);
 			}

@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext, defaulState } from '../../store/GlobalState';
+import { AuthContext, defaultState } from '../../store/GlobalState';
 import { signOut } from '../auth/auth.helper';
 
 function NavBar() {
 	const [authState, setAuthState] = useContext(AuthContext);
+
 	let navigate = useNavigate();
-	const signOutUser = () => {
-		setAuthState(defaulState);
-		signOut();
+	const signOutUser = async () => {
+		await signOut();
+		setAuthState(defaultState);
 		navigate('/signIn');
 	};
 	return (
@@ -21,8 +22,8 @@ function NavBar() {
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse id="responsive-navbar-nav">
 					<Nav className="me-auto">
-						<Nav.Link href="#home">Home</Nav.Link>
-						<Nav.Link href="#link">Products</Nav.Link>
+						<Link to="/home">Home</Link>
+						<Link to="/home/product">Products</Link>
 					</Nav>
 					{/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
 					{/* <Navbar.Collapse id="basic-navbar-nav">
@@ -30,14 +31,7 @@ function NavBar() {
 					</Navbar.Collapse> */}
 					{authState._id !== '' ? (
 						<Nav className="ml-auto">
-							<Link to="/home">
-								<Nav.Link
-									className="ml-auto"
-									onClick={signOutUser}
-								>
-									Signout
-								</Nav.Link>
-							</Link>
+							<Nav.Link onClick={signOutUser}>Signout</Nav.Link>
 						</Nav>
 					) : (
 						''
