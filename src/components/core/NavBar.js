@@ -13,8 +13,24 @@ function NavBar() {
 		setAuthState(defaultState);
 		navigate('/signIn');
 	};
+
+	const conditionallyRenderProductLinks = () => {
+		if (authState._id !== '') {
+			return (
+				<Nav className="me-auto">
+					<Nav.Link as={Link} to="/home">
+						Home
+					</Nav.Link>
+					<Nav.Link as={Link} to="/home/product">
+						Products
+					</Nav.Link>
+				</Nav>
+			);
+		}
+	};
+
 	return (
-		<Navbar bg="dark" variant="dark" expand="sm">
+		<Navbar bg="dark" variant="dark" expand="md">
 			<Container>
 				<Link to="/home">
 					<Navbar.Brand>T-Shirtaholic</Navbar.Brand>
@@ -22,8 +38,7 @@ function NavBar() {
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse id="responsive-navbar-nav">
 					<Nav className="me-auto">
-						<Link to="/home">Home</Link>
-						<Link to="/home/product">Products</Link>
+						{conditionallyRenderProductLinks()}
 					</Nav>
 					{/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
 					{/* <Navbar.Collapse id="basic-navbar-nav">
