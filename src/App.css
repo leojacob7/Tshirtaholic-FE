@@ -58,6 +58,9 @@ body {
   width: 76%;
   box-shadow: 0 14px 28px rgb(0 0 0 / 25%), 0 10px 10px rgb(0 0 0 / 22%);
 }
+.cardShadow {
+  box-shadow: 0 14px 28px rgb(0 0 0 / 25%), 0 10px 10px rgb(0 0 0 / 22%);
+}
 
 .modalContainer {
   display: flex;

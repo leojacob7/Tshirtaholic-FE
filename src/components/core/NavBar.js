@@ -3,6 +3,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext, defaultState } from '../../store/GlobalState';
 import { signOut } from '../auth/auth.helper';
+import Avatar from 'react-avatar';
 
 function NavBar() {
 	const [authState, setAuthState] = useContext(AuthContext);
@@ -45,7 +46,10 @@ function NavBar() {
 						<Nav className="me-auto"></Nav>
 					</Navbar.Collapse> */}
 					{authState._id !== '' ? (
-						<Nav className="ml-auto">
+						<Nav className="ml-auto d-flex justify-content-center align-items-center">
+							<Nav.Link as={Link} to="/home/profile">
+								<Avatar name={authState.name} size={40} round />
+							</Nav.Link>
 							<Nav.Link onClick={signOutUser}>Signout</Nav.Link>
 						</Nav>
 					) : (
