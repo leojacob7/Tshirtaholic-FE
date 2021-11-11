@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../store/GlobalState';
+import React from 'react';
 
 function PageNotFound() {
 	return <div>OOPS!!! page not found</div>;

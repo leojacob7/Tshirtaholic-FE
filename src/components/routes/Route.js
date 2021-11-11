@@ -4,7 +4,7 @@ import { AuthProvider } from '../../store/GlobalState';
 import SignInSignUpContainer from '../auth/SignInSignUpContainer';
 import PageNotFound from '../core/PageNotFound';
 // import HomePage from '../HomePage';
-import SignedInPageRelative from '../SIgnedInPageRelative';
+import SignedInPageRelative from '../SignedInPageRelative';
 const MyRoute = () => {
 	return (
 		<AuthProvider>
